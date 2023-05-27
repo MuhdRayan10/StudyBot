@@ -1,9 +1,14 @@
-class Chapter:
-    def __init__(self, chapter_name, pages, difficulty_level):
-        self.chapter_name = chapter_name
+"""Chapter class"""
 
-        self.t_pages = pages
-        self.difficulty_level = difficulty_level
+
+class Chapter:
+    def __init__(self, name:str, subject:str, pages:int, grade:int, difficulty:int):
+        self.name = name
+        self.grade = grade
+
+        self.subject = subject
+        self.pages = pages
+        self.difficulty_level = difficulty
 
     def __str__(self):
-        return f"{self.chapter_name} - {self.t_pages} pages"
+        return f"{self.name} [Grade {self.grade}] - {self.pages} pages"
