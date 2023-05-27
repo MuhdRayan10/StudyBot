@@ -1,9 +1,9 @@
 from chapter import Chapter
 
 class Subject:
-    def __init__(self, name:str, code:str):
+    def __init__(self, name:str, grade:str):
         self.name = name
-        self.subject_code = code
+        self.grade = grade
 
         # chapters
         self.chapters = []
@@ -15,4 +15,4 @@ class Subject:
         return [chapter for chapter in self.chapters if Chapter.name == name][0]
 
     def __repr__(self):
-        return f"{self.subject_name}({self.subject_code})"
+        return f"{self.subject_name} -> Grade ({self.grade})"
