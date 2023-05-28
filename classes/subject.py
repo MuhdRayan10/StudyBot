@@ -1,4 +1,4 @@
-from chapter import Chapter
+from classes.chapter import Chapter
 
 class Subject:
     def __init__(self, name:str, grade:str):

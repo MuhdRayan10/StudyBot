@@ -15,8 +15,8 @@ class Exam:
         today = date.today()
 
         time_left = exam - today
-        print(time_left)
 
+        del exam, today
         return time_left.days
     
 
