@@ -23,6 +23,9 @@ class Chapter:
         
         return ceil((pages / self.pages) * self.difficulty * 60)
     
+    def data_list(self):
+        return [self.name, self.pages, self.difficulty]
+    
 
 light = Chapter("Light", "Physics", 27, 10, 3)
 print(light.get_time(1))
