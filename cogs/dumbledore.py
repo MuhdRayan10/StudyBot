@@ -26,10 +26,12 @@ class DumbleDore(commands.Cog):
            await interaction.followup.send("Great! What shall I call you?")
 
            def check(m, mode:int):
-            if mode == 1:
-                return m.author.id == interaction.user.id and m.channel.id == interaction.channel.id
-            elif mode == 2:
-                return m.author.id == interaction.user.id and m.channel.id == interaction.channel.id and m.content.isdigit()
+            if m.author.id == interaction.user.id and m.channel.id == interaction.channel.id :
+                match mode:
+                  case 1: return True
+                  case 2: return m.content.isdigit()
+                  case 3: return ',' in m.content
+            
             
            
            name = await self.bot.wait_for("message", check=lambda m: check(m, 1), timeout=15)
@@ -41,11 +43,21 @@ class DumbleDore(commands.Cog):
            hours = await self.bot.wait_for("message", check=lambda m: check(m, 2))
            await hours.reply("Which subjects do you feel weak in / need to concentrate more on?")
 
+           weak_subj = await self.bot.wait_for("message", check=lambda m:check(m, 1))
+           await weak_subj.reply("Which subjects are your strengths / need to concentrate less on?")
+
+           strong_subj = await self.bot.wait_for("message", check=lambda m:check(m, 1))
+           await strong_subj.reply("How many breaks do you want in an hour? How long?\nGive your response as integers separated by a comma\n(For eg: `2, 5`)")
+
+           breaks = await self.bot.wait_for("message", check=lambda m:check(m, 1))
+           await breaks.reply("Perfect! Now you're officially a ~~nerd~~ studious person!\n(Or at least, you've taken your first steps!)") 
 
 
         view = View()
         view.add_item(grades)
-        
+    
+    
+    
         
 
 
