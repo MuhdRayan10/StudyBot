@@ -38,7 +38,7 @@ def add_chapter(grade:int, subject:str, chapters:list):
 
     db.close()
 
-def get_subjects(grade:int, backend:bool):
+def get_subjects(grade:int, backend:bool=True):
     db, c = subj_setup(grade)
 
     c.execute(f"SELECT * FROM subj_{grade}")

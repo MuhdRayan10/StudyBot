@@ -9,7 +9,7 @@ class DumbleDore(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name='register', description="Start managing your studies!")
-    async def register(self, interaction:discord.Interaction, grade:int):
+    async def register(self, interaction:discord.Interaction):
         
         db = sqlite3.connect("./data/users.db")
         c = db.cursor()
@@ -41,7 +41,7 @@ class DumbleDore(commands.Cog):
            hours = await self.bot.wait_for("message", check=lambda m: check(m, 2))
            await hours.reply("Which subjects do you feel weak in / need to concentrate more on?")
 
-           
+
 
         view = View()
         view.add_item(grades)
