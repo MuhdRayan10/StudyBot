@@ -48,6 +48,17 @@ def get_subjects(grade:int, backend:bool=True):
 
     return [(subject[0], eval(subject[1])) for subject in subjects] if backend else subjects
 
+def register_user(self, name:str, grade:int, weak:tuple, strong:tuple, breaks:tuple, holidays:int, hours:int):
+    db = sqlite3.connect("./data/users.db")
+    c = db.cursor()
+
+    c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, grade TEXT, weak TEXT, strong TEXT, breaks INTEGER, b_duration INTEGER, holiday INTEGER, hours INTEGER)")
+    db.commit()
+
+    c.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (name, grade, str(weak), str(strong), breaks[0], breaks[1], holidays, hours))
+    db.commit()
+
+    db.close()
 
 
-
+    

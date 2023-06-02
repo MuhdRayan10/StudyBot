@@ -53,6 +53,9 @@ class DumbleDore(commands.Cog):
            await breaks.reply("Perfect! Now you're officially a ~~nerd~~ studious person!\n(Or at least, you've taken your first steps!)") 
 
 
+
+
+
         view = View()
         view.add_item(grades)
     
