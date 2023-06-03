@@ -42,38 +42,26 @@ class DumbleDore(commands.Cog):
             await holidays.reply("Alright, that's great to hear!\nHow many hours (1 for 1 hr, 2 for 2 hrs etc.) do you wish to dedicate to studying (+ homework) each day?")
 
             subjects = [opt(label=sub[0], description=len(sub[1])) for sub in get_subjects(grades.values[0])]
-            weak, strong = Select(min_values=1, options=subjects), Select(min_values=1, options=subjects)
+            subj = Select(min_values=1, options=subjects)
 
-            view, view2 = View(), View()
-            view.add_item(weak)  
-            view2.add_item(weak)      
-
-            hours = await self.bot.wait_for("message", check=lambda m: check(m, 2))
-            await hours.reply("Which subjects do you feel weak in / need to concentrate more on?", view=view)
-
-            weak_subj = await self.bot.wait_for("message", check=lambda m:check(m, 1))
-            await weak_subj.reply("Which subjects are your strengths / need to concentrate less on?", view=view2)
-
-            strong_subj = await self.bot.wait_for("message", check=lambda m:check(m, 1))
-            await strong_subj.reply("How many breaks do you want in an hour? How long?\nGive your response as integers separated by a comma\n(For eg: `2, 5`)")
+            # TO DO SUBJECTS, STRONG & WEAK SUBJ
+            weak, strong = None, None
 
             breaks = await self.bot.wait_for("message", check=lambda m:check(m, 3))
-            await breaks.reply("Perfect! Now you're officially a ~~nerd~~ studious person!\n(Or at least, you've taken your first steps!)") 
+            await breaks.reply("Almost done! How good / fast are you at studies?\n(This will determine your skill level, so the higher the difficulty the faster you are expected to complete stuff)\nType 1 if you're super good, 2 if you're decent, and 1 if you're average")
+
+            speed = await self.bot.wait_for("message", check=lambda m:check(m, 2))
+            await speed.reply("Perfect! Now you're officially a ~~nerd~~ studious person!\n(Or at least, you've taken your first steps!)") 
 
             breaks = [int(x.strip()) for x in breaks.content.split(',')]
 
-            register_user(name.content, grades.values[0], weak.values, strong.values, breaks[0], breaks[1], int(hours.content))
+            register_user(name.content, interaction.user.id, grades.values[0], subj.values, weak.values, strong.values, breaks[0], breaks[1], int(hours.content), speed)
 
-            del name, grades, weak, weak_subj, strong, strong_subj, breaks, hours, view, view2
-
-
+            del name, grades, weak, weak_subj, strong, strong_subj, breaks, hours, speed
 
         view = View()
         view.add_item(grades)
-    
-    
-    
-        
+
 
 
 

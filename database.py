@@ -1,3 +1,4 @@
+from classes.user import User
 import sqlite3
 
 def convert_chapters(chapters:list):
@@ -8,6 +9,27 @@ def subj_setup(grade:int):
     c = db.cursor()
 
     c.execute(f"CREATE TABLE IF NOT EXISTS subj_{grade} (name TEXT, chapters TEXT)")
+    db.commit()
+
+    return db, c
+
+def user_setup():
+    db = sqlite3.connect("./data/users.db")
+    c = db.cursor()
+
+    c.execute("""CREATE TABLE IF NOT EXISTS users (
+                    name TEXT,
+                    userid INTEGER PRIMARY KEY,
+                    grade TEXT, 
+                    subjects TEXT, 
+                    weak TEXT, 
+                    strong TEXT, 
+                    breaks INTEGER, 
+                    b_duration INTEGER, 
+                    holiday INTEGER, 
+                    hours INTEGER,
+                    skill INTEGER)""")
+
     db.commit()
 
     return db, c
@@ -48,17 +70,27 @@ def get_subjects(grade:int, backend:bool=True):
 
     return [(subject[0], eval(subject[1])) for subject in subjects] if backend else subjects
 
-def register_user(self, name:str, grade:int, weak:tuple, strong:tuple, breaks:tuple, holidays:int, hours:int):
-    db = sqlite3.connect("./data/users.db")
-    c = db.cursor()
+def register_user(name:str, userid:int, grade:int, subjects:tuple, weak:tuple, strong:tuple, breaks:tuple, holidays:int, hours:int, difficulty:int):
+    db, c = user_setup()
 
-    c.execute("CREATE TABLE IF NOT EXISTS users (name TEXT, grade TEXT, weak TEXT, strong TEXT, breaks INTEGER, b_duration INTEGER, holiday INTEGER, hours INTEGER)")
-    db.commit()
-
-    c.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (name, grade, str(weak), str(strong), breaks[0], breaks[1], holidays, hours))
+    c.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+               (name, userid, grade, str(subjects), str(weak), str(strong), breaks[0], breaks[1], holidays, hours, difficulty))
     db.commit()
 
     db.close()
+
+def get_user(userid):
+    db, c = user_setup()
+
+    c.execute(f"SELECT * FROM users WHERE userid={userid}")
+    user = c.fetchall()[0]
+
+    db.close()
+    
+
+    return User(user[0], userid, user[4], user[3], (user[5], user[6]), user[2], user[8], user[9])
+
+
 
 
     

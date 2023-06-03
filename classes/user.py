@@ -9,7 +9,7 @@ breaks -> an tuple with 2 ingetegers that describes how long of a break in an ho
 
 
 class User:
-    def __init__(self, name:str, subjects:list, strengths:list, weaknesses:list, breaks:int, grade:tuple, holidays:list, skill:int):
+    def __init__(self, name:str, subjects:list, strengths:list, weaknesses:list, breaks:tuple, grade:int, holidays:list, skill:int):
         
         self.name = name
         self.grade = grade
