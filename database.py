@@ -86,7 +86,7 @@ def get_user(userid):
     user = c.fetchall()[0]
 
     db.close()
-    
+    print("just for the commit :)")
 
     return User(user[0], userid, user[4], user[3], (user[5], user[6]), user[2], user[8], user[9])
 
