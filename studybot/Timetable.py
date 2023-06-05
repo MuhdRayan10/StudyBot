@@ -1,5 +1,6 @@
 # import matplotlib.pyplot as plt
 import pandas as pd
+import datetime
 
 
 class TimeTable:
@@ -46,6 +47,11 @@ class TimeTable:
         df = pd.DataFrame(self.table)
         df.columns = ["day", "period", "class_name"]
         return df
+
+    def get_tomorrow(self) -> list[str]:
+        """Returns tomorrow's timetable."""
+        tomorrow = (datetime.date.today() + datetime.timedelta(days=1)).strftime(r"%a")
+        return self.table[self.days.index(tomorrow)]
 
 
 if __name__ == "__main__":
@@ -130,4 +136,5 @@ if __name__ == "__main__":
     )
 
     t.get_class("Mon", 1)
-    t.get_timetable_png()
+
+    print(t.get_tomorrow())
